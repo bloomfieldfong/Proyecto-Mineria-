@@ -18,6 +18,8 @@ data <- read.csv("C:\\Users\\Usuario\\Documents\\Septimo Semestre\\Mineria de da
 summary(data)
 
 ##Normalidad de datos 
+
+#Edad
 qqnorm(data$EDAD)
 qqline(data$EDAD)
 
@@ -55,7 +57,12 @@ area
 estado <- table(data$ESTADO.EBRIEDAD)
 estado
 ##ESCOLARIDAD 
-esc <- ta
-ble(data$ESCOLARIDAD)
+esc <- table(data$ESCOLARIDAD)
 esc
+##AÑO
+year <- table(data$AÃ.O)
+year
+##MES
+mes <- table(data$MES)
+mes
 ################################---------- CLUSTERING -------------#########################################
