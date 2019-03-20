@@ -74,10 +74,12 @@ correlacion
 library("ggpubr")
 install.packages("ggpubr")
 plot(data$DEPARTAMENTO,data$ESCOLARIDAD)
+
+cor.test(data$DEPARTAMENTO,data$ESCOLARIDAD,method = "spearman")
+
 ggscatter(data, x = "DEPARTAMENTO", y = "ESCOLARIDAD", 
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "pearson",
           xlab = "Departamento", ylab = "Grado de Escolaridad")
-
 
 ################################---------- CLUSTERING -------------#########################################
