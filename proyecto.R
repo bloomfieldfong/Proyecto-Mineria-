@@ -1,7 +1,7 @@
 ########################################
 ## Universidad del Valle de Guatemala ##
 ## Proyecto 1 Mineria de datos        ##
-## Authores:                          ##
+## Autores:                          ##
 ##    Sergio Marchena                 ##
 ##    Gabriel Martinez                ##
 ##    Michelle Bloomfield             ##
@@ -10,7 +10,7 @@
 library(ggplot2) 
 
 data <- read.csv("C:\\Users\\Usuario\\Documents\\Septimo Semestre\\Mineria de datos\\Proyecto-Mineria-\\base proyecto - bases.csv")
-
+data <- read.csv("base.csv")
 
 ################################----- ANALISIS EXPLORATORIO -------#########################################
 
@@ -36,7 +36,7 @@ tipo
 sexo <- table(data$SEXO)
 sexo
 ##ETNIA
-etnia <- table(data$Ã.TNIA)
+etnia <- table(data$Ã‰TNIA)
 etnia
 ##ESTADO CONYUGAL 
 estCon <- table(data$EST.CONYUGAL)
@@ -59,10 +59,25 @@ estado
 ##ESCOLARIDAD 
 esc <- table(data$ESCOLARIDAD)
 esc
-##AÑO
-year <- table(data$AÃ.O)
+##A?O
+year <- table(data$A?.O)
 year
 ##MES
 mes <- table(data$MES)
 mes
+
+
+##ESCOLARIDAD - DEPARTAMENTO
+?cor
+correlacion <- cor(data$DEPARTAMENTO,data$ESCOLARIDAD, "pearson", use = "complete.obs")
+correlacion
+library("ggpubr")
+install.packages("ggpubr")
+plot(data$DEPARTAMENTO,data$ESCOLARIDAD)
+ggscatter(data, x = "DEPARTAMENTO", y = "ESCOLARIDAD", 
+          add = "reg.line", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "pearson",
+          xlab = "Departamento", ylab = "Grado de Escolaridad")
+
+
 ################################---------- CLUSTERING -------------#########################################
