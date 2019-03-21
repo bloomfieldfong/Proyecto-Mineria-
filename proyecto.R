@@ -97,9 +97,6 @@ ggscatter(data, x = "DEPARTAMENTO", y = "ESCOLARIDAD",
 
 ################################---------- CLUSTERING -------------#########################################
 
-
-
-
 dataCompleto <- data.frame(departamento = data$DEPARTAMENTO, mes = data$MES, year = data$AÃ.O, falta = data$FALTA, sexo = data$SEXO, edad = data$EDAD, etnia = data$Ã.TNIA, estadoConyugal = data$EST.CONYUGAL, departamentoNacimiento = data$DEPTO..DE.NACIMIENTO, condAlfabetismo = data$COND.ALFABETISMO, escolaridad = data$ESCOLARIDAD, ocupacionhabitual = data$OCUPACION.HABITUAL, estadoEbriedad = data$ESTADO.EBRIEDAD, area = data$AREA.GEOGRAFICA)
 
 #Metodo de ward de varianza mínima para formar la gráfica de codo
