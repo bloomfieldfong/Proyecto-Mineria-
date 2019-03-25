@@ -36,7 +36,7 @@ tipo
 sexo <- table(data$SEXO)
 sexo
 ##ETNIA
-etnia <- table(data$ÉTNIA)
+etnia <- table(data$Ã‰TNIA)
 etnia
 ##ESTADO CONYUGAL 
 estCon <- table(data$EST.CONYUGAL)
@@ -67,14 +67,14 @@ mes <- table(data$MES)
 mes
 
 
-##�Cual es el porcentaje de menores de edad que cometen faltas? �Que tipo de faltas cometen?
+##¿Cual es el porcentaje de menores de edad que cometen faltas? ¿Que tipo de faltas cometen?
 menores <- subset(data, data$EDAD<18, select=c("EDAD", "FALTA"))
 menores1 <- table(menores)
 menores1
 
 length(menores1)
 
-##�Cu�ntos menores de edad cometen faltas por estar alcoholizados?
+##¿Cuántos menores de edad cometen faltas por estar alcoholizados?
 Alchol <- subset(data, data$ESTADO.EBRIEDAD<2, select=c("EDAD", "ESTADO.EBRIEDAD"))
 menoresAlcohol <-subset(Alcohol, Alcohol$EDAD<18, select=c("EDAD", "ESTADO.EBRIEDAD"))
 
@@ -97,9 +97,9 @@ ggscatter(data, x = "DEPARTAMENTO", y = "ESCOLARIDAD",
 
 ################################---------- CLUSTERING -------------#########################################
 
-dataCompleto <- data.frame(departamento = data$DEPARTAMENTO, mes = data$MES, year = data$A�.O, falta = data$FALTA, sexo = data$SEXO, edad = data$EDAD, etnia = data$�.TNIA, estadoConyugal = data$EST.CONYUGAL, departamentoNacimiento = data$DEPTO..DE.NACIMIENTO, condAlfabetismo = data$COND.ALFABETISMO, escolaridad = data$ESCOLARIDAD, ocupacionhabitual = data$OCUPACION.HABITUAL, estadoEbriedad = data$ESTADO.EBRIEDAD, area = data$AREA.GEOGRAFICA)
+dataCompleto <- data.frame(departamento = data$DEPARTAMENTO, mes = data$MES, year = data$AÃ.O, falta = data$FALTA, sexo = data$SEXO, edad = data$EDAD, etnia = data$Ã.TNIA, estadoConyugal = data$EST.CONYUGAL, departamentoNacimiento = data$DEPTO..DE.NACIMIENTO, condAlfabetismo = data$COND.ALFABETISMO, escolaridad = data$ESCOLARIDAD, ocupacionhabitual = data$OCUPACION.HABITUAL, estadoEbriedad = data$ESTADO.EBRIEDAD, area = data$AREA.GEOGRAFICA)
 
-#Metodo de ward de varianza m�nima para formar la gr�fica de codo
+#Metodo de ward de varianza mínima para formar la gráfica de codo
 wss <- (nrow(dataCompleto[,1:14])-1)*sum(apply(dataCompleto[,1:14],2,var))
 for (i in 2:10) 
   wss[i] <- sum(kmeans(dataCompleto[,1:14], centers=i)$withinss)
@@ -123,11 +123,68 @@ g3<- dataCompleto[dataCompleto$grupo==3,]
 prop.table(table(g3$Species))*100
 summary(g3)
 
-plotcluster(dataCompleto[,1:14],km$cluster) #grafica la ubicación de los clusters
+plotcluster(dataCompleto[,1:14],km$cluster) #grafica la ubicaciÃ³n de los clusters
 
 
 
+## INICIO DE CODIGO AÑADIDO
+barplot(table(data$COND.ALFABETISMO[data$EDAD>=0 & data$EDAD<=15])/length(data$COND.ALFABETISMO[data$EDAD>=0 & data$EDAD<=15]),
+        ylab="Porcentaje", xlab = "Alfabetismo",col='#001133', ylim = c(0,1))
+barplot(table(data$COND.ALFABETISMO[data$EDAD>15 & data$EDAD<20])/length(data$COND.ALFABETISMO[data$EDAD>15 & data$EDAD<20]),
+        ylab="Porcentaje", xlab = "Alfabetismo",col='#001133', ylim = c(0,1))
+barplot(table(data$COND.ALFABETISMO[data$EDAD>=20 & data$EDAD<30])/length(data$COND.ALFABETISMO[data$EDAD>=20 & data$EDAD<30]),
+        ylab="Porcentaje", xlab = "Alfabetismo",col='#001133', ylim = c(0,1))
+barplot(table(data$COND.ALFABETISMO[data$EDAD>=30 & data$EDAD<40])/length(data$COND.ALFABETISMO[data$EDAD>=30 & data$EDAD<40]),
+        ylab="Porcentaje", xlab = "Alfabetismo",col='#001133', ylim = c(0,1))
+barplot(table(data$COND.ALFABETISMO[data$EDAD>=40 & data$EDAD<900])/length(data$COND.ALFABETISMO[data$EDAD>=40 & data$EDAD<900]),
+        ylab="Porcentaje", xlab = "Alfabetismo",col='#001133', ylim = c(0,1))
 
+
+barplot(table(data$FALTA[data$COND.ALFABETISMO==1])/length(data$FALTA[data$COND.ALFABETISMO==1]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.5))
+barplot(table(data$FALTA[data$COND.ALFABETISMO==2])/length(data$FALTA[data$COND.ALFABETISMO==2]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.5))
+barplot(table(data$FALTA[data$COND.ALFABETISMO==9])/length(data$FALTA[data$COND.ALFABETISMO==9]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,1))
+
+
+barplot(table(data$FALTA[data$SEXO==1])/length(data$FALTA[data$SEXO==1]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.5))
+barplot(table(data$FALTA[data$SEXO==2])/length(data$FALTA[data$SEXO==2]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,1))
+barplot(table(data$SEXO)/length(data$SEXO),
+        ylab="Porcentaje", xlab = "Sexo",col='#001133', ylim = c(0,1))
+
+
+barplot(table(data$FALTA[data$ESTADO.EBRIEDAD==1])/length(data$FALTA[data$ESTADO.EBRIEDAD==1]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$FALTA[data$ESTADO.EBRIEDAD==2])/length(data$FALTA[data$ESTADO.EBRIEDAD==2]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.8))
+barplot(table(data$ESTADO.EBRIEDAD)/length(data$ESTADO.EBRIEDAD),
+        ylab="Porcentaje", xlab = "Estado de ebriedad",col='#001133', ylim = c(0,1))
+
+barplot(table(data$FALTA[data$ESCOLARIDAD==1])/length(data$FALTA[data$ESCOLARIDAD==1]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$FALTA[data$ESCOLARIDAD==2])/length(data$FALTA[data$ESCOLARIDAD==2]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$FALTA[data$ESCOLARIDAD==3])/length(data$FALTA[data$ESCOLARIDAD==3]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$FALTA[data$ESCOLARIDAD==4])/length(data$FALTA[data$ESCOLARIDAD==4]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$FALTA[data$ESCOLARIDAD==5])/length(data$FALTA[data$ESCOLARIDAD==5]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$FALTA[data$ESCOLARIDAD==6])/length(data$FALTA[data$ESCOLARIDAD==6]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$ESCOLARIDAD)/length(data$ESCOLARIDAD),
+        ylab="Porcentaje", xlab = "Grado de escolaridad",col='#001133', ylim = c(0,1))
+
+barplot(table(data$FALTA[data$Ã.TNIA==1])/length(data$FALTA[data$Ã.TNIA==1]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$FALTA[data$Ã.TNIA==2])/length(data$FALTA[data$Ã.TNIA==2]),
+        ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
+barplot(table(data$Ã.TNIA)/length(data$Ã.TNIA),
+        ylab="Porcentaje", xlab = "Etnia",col='#001133', ylim = c(0,1))
+## FIN DE CODIGO AÑADIDO
 
 
 
