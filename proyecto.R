@@ -73,13 +73,29 @@ correlacion <- cor(data$DEPARTAMENTO,data$ESCOLARIDAD, "pearson", use = "complet
 correlacion
 library("ggpubr")
 install.packages("ggpubr")
-plot(data$DEPARTAMENTO,data$ESCOLARIDAD)
+plot(data$SEXO,data$MUNICIPIO)
 
-cor.test(data$DEPARTAMENTO,data$ESCOLARIDAD,method = "spearman")
-
-ggscatter(data, x = "DEPARTAMENTO", y = "ESCOLARIDAD", 
+cor.test(data$ESTADO.EBRIEDAD,data$FALTA,method = "pearson")
+View(data)
+ggscatter(data, x = "AÑO", y = "FALTA", 
           add = "reg.line", conf.int = TRUE, 
           cor.coef = TRUE, cor.method = "pearson",
-          xlab = "Departamento", ylab = "Grado de Escolaridad")
+          xlab = "ESTADO", ylab = "FALTA")
 
+quince<-nrow(data[data$DEPARTAMENTO == 1 & data$AÑO == "2015",])
+seis<-nrow(data[data$DEPARTAMENTO == 1 & data$AÑO == "2016",])
+siete<-nrow(data[data$DEPARTAMENTO == 1 & data$AÑO == "2017",])
+anios<-c(quince,seis,siete)
+barplot(anios,space = 0.5)
+falG<-data[data$DEPARTAMENTO == 1,]$FALTA
+hist(falG, main = "Tipo de Faltas en Guatemala", xlab = "Falta", ylab = "Casos",col = "black")
+nrow(data[data$DEPARTAMENTO == 1 & data$FALTA == 5,])
+
+
+faltasTot<-(data$FALTA)
+faltasTotG<-nrow(data[data$DEPARTAMENTO == 1,])
+mese<-data$MES
+hist(mese)
+cor.test(mese,faltasTot)
+(data[data$MES & data$ESTADO.EBRIEDAD,])
 ################################---------- CLUSTERING -------------#########################################
