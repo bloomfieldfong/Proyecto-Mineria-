@@ -199,6 +199,9 @@ barplot(table(data$Ã.TNIA)/length(data$Ã.TNIA),
 library(e1071)
 library(caret)
 
+datosTraining<-datosTraining[datosTraining$EDAD < 100,]
+max(datosTraining$EDAD)
+
 porcentaje<-0.7
 datosTraining<-read.csv("base.csv")
 set.seed(123)
@@ -213,6 +216,7 @@ datosTraining$X.6<-NULL
 datosTraining$X.7<-NULL
 datosTraining$X.8<-NULL
 datosTraining$X.9<-NULL
+datosTraining$CORRELATIVO<-NULL
 
 View(datosTraining)
 
@@ -223,9 +227,13 @@ test<-datosTraining[-corte,]
 modelo<-naiveBayes(as.factor(FALTA)~.,data=train)
 
 predBayes<-predict(modelo, newdata = test)
-predBayes
 cfmBayes<-confusionMatrix(predBayes,as.factor(test$FALTA))
-
 cfmBayes
-#Accuracy : 0.4281 :'(
+#Accuracy : 0.4426 :'(
+
+
+# RANDOM FOREST
+library(randomForest)
+library(caret)
+
 
