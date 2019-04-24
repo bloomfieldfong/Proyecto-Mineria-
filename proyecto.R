@@ -7,7 +7,8 @@
 ##    Michelle Bloomfield             ##
 ########################################
 
-library(ggplot2) 
+library(ggplot2)
+library(caret)
 
 data <- read.csv("C:\\Users\\Usuario\\Documents\\Septimo Semestre\\Mineria de datos\\Proyecto-Mineria-\\base proyecto - bases.csv")
 data <- read.csv("base.csv")
@@ -186,4 +187,45 @@ barplot(table(data$FALTA[data$Ã.TNIA==2])/length(data$FALTA[data$Ã.TNIA==2]),
         ylab="Porcentaje", xlab = "Tipo de falta",col='#001133', ylim = c(0,.6))
 barplot(table(data$Ã.TNIA)/length(data$Ã.TNIA),
         ylab="Porcentaje", xlab = "Etnia",col='#001133', ylim = c(0,1))
-## FIN DE CODIGO AÑADIDO
+
+##########################################################################################
+##########################################################################################
+##########################################################################################
+############################## PRUEBA DE ALGORITMOS ######################################
+##########################################################################################
+##########################################################################################
+
+# NAIVE BAYES
+library(e1071)
+library(caret)
+
+porcentaje<-0.7
+datosTraining<-read.csv("base.csv")
+set.seed(123)
+
+datosTraining$X<-NULL
+datosTraining$X.1<-NULL
+datosTraining$X.2<-NULL
+datosTraining$X.3<-NULL
+datosTraining$X.4<-NULL
+datosTraining$X.5<-NULL
+datosTraining$X.6<-NULL
+datosTraining$X.7<-NULL
+datosTraining$X.8<-NULL
+datosTraining$X.9<-NULL
+
+View(datosTraining)
+
+corte<-sample(nrow(datosTraining),nrow(datosTraining)*porcentaje)
+train<-datosTraining[corte,]
+test<-datosTraining[-corte,]
+
+modelo<-naiveBayes(as.factor(FALTA)~.,data=train)
+
+predBayes<-predict(modelo, newdata = test)
+predBayes
+cfmBayes<-confusionMatrix(predBayes,as.factor(test$FALTA))
+
+cfmBayes
+#Accuracy : 0.4281 :'(
+
